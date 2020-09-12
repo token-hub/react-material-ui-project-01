@@ -7,16 +7,18 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import Alert from '@material-ui/lab/Alert';
+import PageHeader from './common/PageHeader';
 
 const useStyles = makeStyles({
 	root: {
-		alignItems: 'center',
+		padding: '3rem 0',
 		height: '90%'
 	},
 	subHeader: {
 		display: 'flex',
-		width: 165,
-		justifyContent: 'space-between'
+		'& > svg' : {
+			marginRight: '10px'
+		}
 	},
 	form: {
 		margin: '1rem 0',
@@ -49,16 +51,12 @@ const Login = () => {
 			<Grid item xs={2} />
 			<Grid item xs={8}>
 				<Alert severity="error" variant='filled'>This is an error alert — check it out!</Alert>
-				<Typography variant='h3' color='primary'>
-					Sign In
-				</Typography>
 
-				<div className={classes.subHeader}>
-					<AccountCircle color='secondary' />
-					<Typography variant='subtitle1' color='secondary'>
-						Create your profile
-					</Typography>
-				</div>
+				<PageHeader
+					title='Sign In'
+					subtitle='Create your profile'
+					icon={<AccountCircle color='secondary' />}
+				/>
 
 				<form className={classes.form} noValidate autoComplete="off">
 					{

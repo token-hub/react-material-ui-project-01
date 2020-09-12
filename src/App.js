@@ -5,7 +5,12 @@ import Landing from './components/landing/Landing';
 import Login from './components/Login';
 import Register from './components/Register';
 import PageNotPage from './components/common/PageNotFound';
-import Developers from './components/Developers';
+import Developers from './components/developers/Developers';
+import DeveloperCreate from './components/developers/DeveloperCreate';
+import DeveloperExpAdd from './components/developers/DeveloperExpAdd';
+import DeveloperEduAdd from './components/developers/DeveloperEduAdd';
+import Developer from './components/developers/Developer';
+import Home from './components/home/Home';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -24,17 +29,17 @@ const App = ({ history }) => {
 	const [openDrawer, setOpenDrawer] = useState(false);
 
 	const handleRoute = route => () => {
-		setCollapse(!collapse);
-		setOpenDrawer(!openDrawer);
+		setCollapse(false);
+		setOpenDrawer(false);
 		history.push(`/${route}`); 
 	}
 
-	const handleCollapse = () => {
-		setCollapse(!collapse);
+	const handleCollapse = (e) => {
+		setCollapse(e);
 	}
 
-	const handleDrawer = () => () =>{
-		setOpenDrawer(!openDrawer);
+	const handleDrawer = (e) => () =>{
+		setOpenDrawer(e);
 	}
 
 	const context = {
@@ -55,6 +60,11 @@ const App = ({ history }) => {
 					<Route path='/login' component={Login} />
 					<Route path='/register' component={Register} />
 					<Route path='/developers' component={Developers} />
+					<Route path='/developer/create' component={DeveloperCreate} />
+					<Route path='/developer/experience/add' component={DeveloperExpAdd} />
+					<Route path='/developer/education/add' component={DeveloperEduAdd} />
+					<Route path='/developer' component={Developer} />
+					<Route path='/home' component={Home} />
 					<Route component={PageNotPage} />
 				</Switch>
 			</RouterContext.Provider>

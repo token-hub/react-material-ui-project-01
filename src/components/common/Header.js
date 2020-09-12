@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useContext} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
 import { RouterContext } from '../../App';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
 	root: {
 		borderBottom: '1px solid #17a2b8',
 		opacity: '0.9',
@@ -22,7 +22,11 @@ const useStyles = makeStyles({
 	},
 	brand: {
 		color: 'white',
-		flex: 1
+		flex: 1,
+		'&:hover': {
+			textDecoration: 'none',
+			color: theme.palette.primary.main
+		}
 	},
 	headerClickable: {
 		display: 'flex',
@@ -37,9 +41,9 @@ const useStyles = makeStyles({
 			color: '#17a2b8'
 		}
 	}
-})
+}))
 
-const Header = ({ history }) => {
+const Header = () => {
 	const router = useContext(RouterContext);
 	const classes = useStyles();
 
@@ -47,32 +51,37 @@ const Header = ({ history }) => {
 		<React.Fragment>
 			<AppBar position='static' color='secondary' className={classes.root}>
 				<Toolbar className={classes.toolBar}>
-					<IconButton onClick={router.handleDrawer()} >
-						<MenuIcon style={{ color: 'white' }} />
-					</IconButton>
+					<Hidden smUp>
+						<IconButton onClick={router.handleDrawer(true)} >
+							<MenuIcon style={{ color: 'white' }} />
+						</IconButton>
 						<DrawerComp />
-						<Typography variant='h5' className={classes.brand}>
-							DevConnector
-						</Typography>
+					</Hidden>
+					<Link 
+						variant='h5'
+						href='/home' 
+						className={classes.brand}>
+						DevConnector
+					</Link>
 
-						<Hidden xsDown>
-							<div className={classes.headerClickable}>
-							{
-								['Landing' ,'Developers', 'Register', 'Login'].map((header, index) => 
-									(
-										<Typography key={index}>
-											<Link 
-												href="#" 
-												className={classes.link}
-												onClick={ router.routeHandler(`${header.toLowerCase()}`)  }
-												> {header}
-											</Link>
-										</Typography>
-									)
+					<Hidden xsDown>
+						<div className={classes.headerClickable}>
+						{
+							['Landing' ,'Developers', 'Register', 'Login'].map((header, index) => 
+								(
+									<Typography key={index}>
+										<Link 
+											href="#" 
+											className={classes.link}
+											onClick={ router.routeHandler(`${header.toLowerCase()}`)  }
+											> {header}
+										</Link>
+									</Typography>
 								)
-							}
-							</div>
-						</Hidden>
+							)
+						}
+						</div>
+					</Hidden>
 				</Toolbar>
 			</AppBar>
 		</React.Fragment>

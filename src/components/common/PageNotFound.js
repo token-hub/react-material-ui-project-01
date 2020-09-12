@@ -5,14 +5,14 @@ const PageNotFound = () => {
 	
 	const style = {
 		display: 'flex',
-		height: '100vh',
+		height: '90%',
 		justifyContent: 'center',
 		alignItems: 'center'
 	}
 
 	return (
 		<React.Fragment>
-			<Typography variant='h2' style={style}> Opps! Page not found! </Typography>
+			<Typography variant='h2' style={style}> Opps! Page not found. :( </Typography>
 		</React.Fragment>
 	) 
 }

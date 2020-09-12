@@ -45,7 +45,7 @@ const DrawerComp = () => {
 					<Button 
 						color='inherit' 
 						className={classes.button}
-						onClick={router.handleDrawer()}
+						onClick={router.handleDrawer(false)}
 						>Close
 						</Button>
 					<ListItem divider />
