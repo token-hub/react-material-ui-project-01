@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import TemplateExpEdu from './TemplateExpEdu';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -13,7 +13,7 @@ const DeveloperExpEdu = () => {
 
 	const classes = useStyles();
 
-	const expInitial = [
+	const exp = [
 		{
 			company: 'Microsoft',
 			date: 'Oct 2011 - Current',
@@ -36,7 +36,7 @@ const DeveloperExpEdu = () => {
 		}
 	]
 
-	const eduInitial = [
+	const edu = [
 		{
 			company: 'University of Washington',
 			date: 'Sep 1993 - June 1999',
@@ -49,9 +49,6 @@ const DeveloperExpEdu = () => {
 						   inventore, quaerat, nihil.`
 		},
 	]
-
-	const [exp, setExp] = useState(expInitial)
-	const [edu, setEdu] = useState(eduInitial)
 
 	return (
 		<React.Fragment>

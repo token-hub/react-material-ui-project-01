@@ -4,6 +4,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
+	root: {
+		marginBottom: '1rem'
+	},
 	subHeader: {
 		display: 'inline-flex',
 		'& > svg' : {
@@ -13,10 +16,10 @@ const useStyles = makeStyles({
 })
 
 const PageHeader = ({ title, subtitle, icon }) => {
-	const { subHeader } = useStyles();
+	const { subHeader, root } = useStyles();
 
 	return (
-		<React.Fragment>
+		<div className={root}>
 			<Typography variant='h3' color='primary'>
 					{ title }
 			</Typography>	
@@ -27,7 +30,7 @@ const PageHeader = ({ title, subtitle, icon }) => {
 					{subtitle}
 				</Typography>
 			</div>
-		</React.Fragment>
+		</div>
 	)
 }
 

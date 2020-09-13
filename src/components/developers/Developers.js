@@ -1,12 +1,13 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import DeveloperCard from './DeveloperCard';
 import Button from '@material-ui/core/Button';
-import CodeIcon from '@material-ui/icons/Code';
 import PageHeader from '../common/PageHeader';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { processGetDevelopers as getDevelopers } from '../../redux';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -23,23 +24,25 @@ const useStyles = makeStyles(theme => ({
 	},
 }))
 
-const Developers = () => {
+const Developers = ({ developers, getDevelopers }) => {
 	const classes = useStyles();
 	
-	const createData = (name, description, location, skills = []) => {
-		return { name, description, location, skills }
-	}
+	const [devs, setDevs] = useState([...developers]);
+	
+	useEffect( () => {
+		if (developers.length < 1) {
+			getDevelopers();
+		} else {
+			setDevs([...developers])
+		}
+	}, [developers] )
 
-	const developers = [
-		createData('John Doe', 'Developer at Microsoft', 'Seattle, WA', ['HTML', 'Javascript', 'CSS', 'PYTON']),
-		createData('John Doe', 'Developer at Microsoft', 'Seattle, WA', ['HTML', 'Javascript', 'CSS', 'PYTON'])
-	]
 
 	return (
 		<div>
 			<Grid container >
-				<Grid item sm={2} />
-				<Grid item sm={8} container className={classes.root}>
+				<Grid item sm={1} />
+				<Grid item sm={10} container className={classes.root}>
 
 					<PageHeader
 						title='Add An Experience'
@@ -55,10 +58,10 @@ const Developers = () => {
 					</Button>
 
 					{
-						developers.map( ({name, description, location, skills}, index) => 
+						devs.length > 0 && devs.map( ({developer, description, location, skills}, index) => 
 							(
 								<DeveloperCard
-									name={name}
+									developer={developer}
 									description={description}
 									location={location}
 									skils={skills}
@@ -69,10 +72,23 @@ const Developers = () => {
 					}
 
 				</Grid>
-				<Grid item sm={2} />
+				<Grid item sm={1} />
 			</Grid>
 		</div>
 	)
 }
 
-export default Developers
+const mapStateToProps = (state) => ({
+	developers: state.developers
+})
+
+const mapDispatchToProps = {
+	getDevelopers
+}
+
+Developers.propTypes = {
+	developers: PropTypes.array.isRequired,
+	getDevelopers: PropTypes.func.isRequired,
+}
+
+export default  connect(mapStateToProps, mapDispatchToProps)(Developers)

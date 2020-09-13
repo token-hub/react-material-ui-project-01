@@ -43,8 +43,9 @@ const useStyles = makeStyles(theme => ({
 	}
 }))
 
-const Header = () => {
-	const router = useContext(RouterContext);
+const Header = ({ location }) => {
+
+	const { routes, handleDrawer, routeHandler, isLanding } = useContext(RouterContext);
 	const classes = useStyles();
 
 	return (
@@ -52,7 +53,7 @@ const Header = () => {
 			<AppBar position='static' color='secondary' className={classes.root}>
 				<Toolbar className={classes.toolBar}>
 					<Hidden smUp>
-						<IconButton onClick={router.handleDrawer(true)} >
+						<IconButton onClick={handleDrawer(true)} >
 							<MenuIcon style={{ color: 'white' }} />
 						</IconButton>
 						<DrawerComp />
@@ -67,17 +68,20 @@ const Header = () => {
 					<Hidden xsDown>
 						<div className={classes.headerClickable}>
 						{
-							['Landing' ,'Developers', 'Register', 'Login'].map((header, index) => 
-								(
-									<Typography key={index}>
-										<Link 
-											href="#" 
-											className={classes.link}
-											onClick={ router.routeHandler(`${header.toLowerCase()}`)  }
-											> {header}
-										</Link>
-									</Typography>
-								)
+							routes.filter( ({title, route}) => isLanding ? title === 'Register' || title === 'Login' : title !== 'Register' && title !== 'Login' )
+							.map(({title, route}, index) => 
+								{
+									return (
+											<Typography key={index}>
+												<Link 
+													href="#" 
+													className={classes.link}
+													onClick={routeHandler(route ? route : `${title.toLowerCase()}`)  }
+													> {title}
+												</Link>
+											</Typography>
+										)
+								}
 							)
 						}
 						</div>

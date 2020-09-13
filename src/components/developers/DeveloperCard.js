@@ -40,7 +40,8 @@ const useStyles = makeStyles( theme => ({
 	}
 }))
 
-const DeveloperCamp = ({ name, description, location, skils = [] }) => {
+const DeveloperCamp = ({ developer, description, location, skils = [] }) => {
+
 	const classes = useStyles();
 	return (
 		<Card className={classes.card}>
@@ -52,8 +53,9 @@ const DeveloperCamp = ({ name, description, location, skils = [] }) => {
 					className={classes.padding}
 					>
 					<img 
-					src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200" 
-					className={classes.img} 
+						alt=''
+						src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200" 
+						className={classes.img} 
 					/>
 				</Grid>
 				<Grid sm={6} 
@@ -62,9 +64,9 @@ const DeveloperCamp = ({ name, description, location, skils = [] }) => {
 					justify='center' 
 					alignItems='baseline' 
 					direction='column' 
-					className={ clsx(classes.padding, classes.alignItems)}
+					className={clsx(classes.padding, classes.alignItems)}
 					>
-					<Typography variant='h4' color='secondary'> { name } </Typography>
+					<Typography variant='h4' color='secondary'> { developer } </Typography>
 					<Typography variant='body1'>{ description } </Typography>
 					<Typography variant='body1'> { location } </Typography>
 					<Button
@@ -79,7 +81,6 @@ const DeveloperCamp = ({ name, description, location, skils = [] }) => {
 					container 
 					justify='center' 
 					direction='column' 
-					justify='center' 
 					alignItems='center'
 					>
 					<Hidden only='xs'>
@@ -88,7 +89,7 @@ const DeveloperCamp = ({ name, description, location, skils = [] }) => {
 							(
 								<Typography variant='body1' color='primary' key={skill}>
 									<DoneIcon color='primary' />
-								 	{skill} 
+								 	{skill[0].toUpperCase()+skill.slice(1)} 
 								</Typography>
 							)
 						)

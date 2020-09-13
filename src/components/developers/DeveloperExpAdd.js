@@ -1,9 +1,7 @@
 import React, {useState} from 'react'
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
+
 import Button from '@material-ui/core/Button';
 import TextFields from '../common/TextFields'
 import PageHeader from '../common/PageHeader';
@@ -22,15 +20,6 @@ const useStyles = makeStyles(theme => ({
 			},
 		}
 	},
-	subHeader: {
-		display: 'inline-flex',
-		'& > svg' : {
-			marginRight: '10px'
-		}
-	},
-	field: {
-		margin: '.5rem 0'
-	},
 	form: {
 		display: 'flex',
 		flexDirection: 'column'
@@ -38,7 +27,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const DeveloperExpAdd = () => {
-	const {subHeader, root, field, form} = useStyles();
+	const {root, form} = useStyles();
 
 	const [values, setValues] = useState({
 		position: '',

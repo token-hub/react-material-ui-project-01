@@ -12,6 +12,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
 import { makeStyles } from '@material-ui/core/styles';
 import { RouterContext } from '../../App';
+import { withRouter} from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -29,15 +30,16 @@ const useStyles = makeStyles(theme => ({
 	}
 }))
 
-const DrawerComp = () => {
-	const router = useContext(RouterContext);
+const DrawerComp = ({ location }) => {
+
+	const { handleDrawer, routeHandler, drawer, isLanding, routes } = useContext(RouterContext);
 	const [collapse, setCollapse] = useState(false);
 	const classes = useStyles();
 
 	return (
 		<React.Fragment>
 			<Drawer  
-				open={router.drawer}
+				open={drawer}
 				variant='temporary'
 			>
 
@@ -45,21 +47,23 @@ const DrawerComp = () => {
 					<Button 
 						color='inherit' 
 						className={classes.button}
-						onClick={router.handleDrawer(false)}
+						onClick={handleDrawer(false)}
 						>Close
 						</Button>
 					<ListItem divider />
-					{
-						['Landing' ,'Developers', 'Register', 'Login'].map( (list, index) => (
+					{	
+						routes.filter( ({title, route}) => isLanding ? title === 'Register' || title === 'Login' : title !== 'Register' && title !== 'Login' )
+						.map( ({title, route}, index) => (
+
 							<ListItem 
 								key={index} 
 								button
-								onClick={ router.routeHandler(`${list.toLowerCase()}`)  }
+								onClick={routeHandler(route ? route : `${title.toLowerCase()}`)  }
 							>
 								<ListItemIcon> 
-								 	{ list == 'Inbox' ? <Inbox /> : <Drafts /> }
+								 	{ index %  2 ==  0 ? <Inbox /> : <Drafts /> }
 								</ListItemIcon>
-								<ListItemText primary={list} />
+								<ListItemText primary={title} />
 							</ListItem>
 						) )
 					}
@@ -94,7 +98,7 @@ const DrawerComp = () => {
 	)
 }
 
-export default DrawerComp
+export default withRouter(DrawerComp)
 
 
 /*

@@ -27,14 +27,14 @@ const TextFields = ({ fields, values, handleChange }) => {
 							const extraProps = {};
 							const inputProps = {};
 
-							if (fieldType === 'select') inputProps.select = 'select';
+							if (fieldType === 'select') extraProps.select = 'select';
 							if (fieldType === 'checkbox') inputProps.checkbox = 'checkbox';
 							if (fieldType === 'date') {
 								Object.assign(inputProps, {date: "date"}, {shrink: true});
 							}
 
 							if (fieldType === 'textarea') {
-								Object.assign(extraProps, {multiline: true});
+								Object.assign(extraProps, {multiline: true}, {rows: 4});
 							}
 
 							return	fieldType === 'checkbox' ? (
@@ -66,7 +66,7 @@ const TextFields = ({ fields, values, handleChange }) => {
 											{
 												fieldType == 'select'  
 													?	['Developer', 'Junior Developer', 'Senior Developer', 'Manager'].map((position, index) => (
-															<MenuItem  key={index} value={position}>
+															<MenuItem   key={index}   value={position}>
 																{position}
 															</MenuItem>
 														))

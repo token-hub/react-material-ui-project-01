@@ -11,6 +11,8 @@ import DeveloperExpAdd from './components/developers/DeveloperExpAdd';
 import DeveloperEduAdd from './components/developers/DeveloperEduAdd';
 import Developer from './components/developers/Developer';
 import Home from './components/home/Home';
+import Posts from './components/post/Posts';
+import PostDiscussion from './components/post/PostDiscussions';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -22,11 +24,12 @@ const useStyles = makeStyles({
 	}
 })
 
-const App = ({ history }) => {
+const App = ({ history, location }) => {
 
 	const classes = useStyles();
 	const [collapse, setCollapse] = useState(false);
 	const [openDrawer, setOpenDrawer] = useState(false);
+	const isLanding = location.pathname.includes('landing');
 
 	const handleRoute = route => () => {
 		setCollapse(false);
@@ -42,12 +45,28 @@ const App = ({ history }) => {
 		setOpenDrawer(e);
 	}
 
+
+	const createRoute = (title, route = null) => {
+		return {title, route}
+	}
+
+	const routes = [
+		createRoute('Landing'),
+		createRoute('Developers'),
+		createRoute('Register'),
+		createRoute('Login'),
+		createRoute('Posts'),
+		createRoute('Logout', 'landing'),
+	]
+
 	const context = {
 		routeHandler: handleRoute,
 		collapse: collapse,
 		handleCollapse: handleCollapse,
 		drawer: openDrawer,
-		handleDrawer: handleDrawer
+		handleDrawer: handleDrawer,
+		routes: routes,
+		isLanding
 	}
 
 	return (
@@ -58,6 +77,8 @@ const App = ({ history }) => {
 				<Switch>
 					<Route path='/landing' exact component={Landing} />
 					<Route path='/login' component={Login} />
+					<Route path='/posts/post-discussion' component={PostDiscussion} />
+					<Route path='/posts' component={Posts} />
 					<Route path='/register' component={Register} />
 					<Route path='/developers' component={Developers} />
 					<Route path='/developer/create' component={DeveloperCreate} />

@@ -10,7 +10,7 @@ import PageHeader from './common/PageHeader';
 
 const useStyles = makeStyles({
 	root: {
-		padding: '3rem 0',
+		padding: '2rem 0',
 		height: '90%',
 		margin: '30px 0'
 	},

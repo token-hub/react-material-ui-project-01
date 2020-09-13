@@ -1,7 +1,6 @@
 import React from 'react'
 import Grid from '@material-ui/core/grid';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Button from '@material-ui/core/Button';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
@@ -20,9 +19,6 @@ const useStyles = makeStyles({
 		'& > svg' : {
 			marginRight: '10px'
 		}
-	},
-	margin: {
-		marginTop: '1rem'
 	},
 	width: {
 		width: '100%',
@@ -62,7 +58,7 @@ const Home = () => {
 				/>
 
 				<Grid container className={classes.width}>
-					<Grid item xs={12} sm={8} className={classes.margin} >
+					<Grid item xs={12} sm={8} >
 						{
 							data.map( ({ title, icon, href }, index) => (
 								<Button

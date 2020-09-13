@@ -6,8 +6,7 @@ import Card from '@material-ui/core/Card';
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
-import { Public, Twitter, Facebook, Linkedin, Intragram } from '@material-ui/icons';
-import { loadCSS } from 'fg-loadcss';
+import { Public, Twitter, Facebook, LinkedIn, Instagram } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
 	card: {
@@ -30,24 +29,20 @@ const useStyles = makeStyles(theme => ({
 		color: 'white'
 	},
 	btn: {
-		marginBottom: 30
+		marginBottom: 20,
+		margin: '0 5px'
 	}
-
 }));
 
 const DeveloperHeader = () => {
-	const classes = useStyles();
+	const {card, img, container, icon, btn} = useStyles();
+	
+	const component = { Public, Twitter, Facebook, LinkedIn, Instagram }
 
-	useEffect(() => {
-	    const node = loadCSS(
-	      'https://use.fontawesome.com/releases/v5.12.0/css/all.css',
-	      document.querySelector('#font-awesome-css'),
-	    );
-
-	    return () => {
-	      node.parentNode.removeChild(node);
-	    };
-  	}, []);
+	function iconComponent(icon, style) {
+		const Icon = component[icon];
+	    return <Icon  className={style} />;
+	}
 
 	return (
 		<React.Fragment>
@@ -55,38 +50,31 @@ const DeveloperHeader = () => {
 				href='/developers' 
 				size='large' 
 				variant='contained'
-				className={classes.btn}
+				className={btn}
 				> Back to profiles 
 			</Button>
 
-			<Card raised className={classes.card}>
+			<Card raised className={card}>
 				<Grid
 					container
 					justify='center'
 					alignItems='center'
 					direction='column'
-					className={classes.container}
+					className={container}
 				>
 					<img 
 						src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200" 
-						className={classes.img} 
+						className={img} 
 						/>
-						<Typography variant='h3'> John Doe </Typography>
+						<Typography variant='h4'> John Doe </Typography>
 						<Typography variant='subtitle1'>Developer at Microsoft </Typography>
 						<Typography variant='subtitle1'> Seattle, WA </Typography>
 
 						<div>
 							{
-								['globe-asia', 'twitter', 'facebook', 'linkedin', 'instagram'].map((icon, index) =>
-										(
-											<IconButton key={index} className={classes.icon}>
-												{ index === 0 
-													? ( <Icon className={`fas fa-${icon}`} /> )
-													: ( <Icon className={`fab fa-${icon}`} /> )
-												}
-											</IconButton>	
-										)
-									)
+								['Public', 'Facebook', 'Twitter', 'Instagram', 'LinkedIn'].map( icon => {
+									return iconComponent(icon, btn)
+								} )
 							}
 						</div>
 					</Grid>

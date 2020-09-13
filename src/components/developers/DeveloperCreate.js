@@ -1,13 +1,14 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import TextFields from '../common/TextFields'
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import PageHeader from '../common/PageHeader';
+import { processCreateDeveloper as createDeveloper } from '../../redux';
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types';
+import { processGetDevelopers as getDevelopers } from '../../redux';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -22,26 +23,22 @@ const useStyles = makeStyles(theme => ({
 			},
 		}
 	},
-	subHeader: {
-		display: 'inline-flex',
-		'& > svg' : {
-			marginRight: '10px'
-		}
-	},
-	field: {
-		margin: '.5rem 0'
-	},
 	form: {
 		display: 'flex',
 		flexDirection: 'column'
 	}
 }))
 
-const DeveloperCreate = () => {
-	const {subHeader, root, field, form} = useStyles();
+const DeveloperCreate = ({ createDeveloper, history, getDevelopers }) => {
+	const {root, form} = useStyles();
+
+	useEffect( () => {
+		getDevelopers();
+	}, [] )
 
 	const [values, setValues] = useState({
-		position: '',
+		developer: '',
+		description: 'Developer',
 		company: '',
 		website: '',
 		location: '',
@@ -52,10 +49,18 @@ const DeveloperCreate = () => {
 
 	const handleChange = e => {
 		const { value, name } = e.target;
+
+
 		setValues({
 			...values,
-			[name]: value
+			[name]: name === 'skills' ? value.split(',') : value
 		})
+	}
+
+	const onSubmit = e => {
+		e.preventDefault();
+		createDeveloper(values);
+		history.push('/developers')
 	}
 
 	const textField = (name, fieldType, placeholder = null) => {
@@ -63,13 +68,14 @@ const DeveloperCreate = () => {
 	}
 
 	const fields = [
-		textField('position', 'select'),
+		textField('developer', 'text', 'Name'),
+		textField('description', 'select'),
 		textField('company', 'text'),
 		textField('website', 'text'),
 		textField('location', 'text'),
 		textField('skills', 'text'),
 		textField('github', 'text'),
-		textField('bio', 'textArea', 'Tell us a little about yourself'),
+		textField('bio', 'textarea', 'Tell us a little about yourself'),
 	];
 
 	return (
@@ -83,7 +89,10 @@ const DeveloperCreate = () => {
 					icon={<AccountCircle color='secondary' />}
 				/>
 
-				<form action="" className={form}>
+				<form 
+					action="" 
+					className={form}
+					>
 
 					<TextFields 
 						fields={fields}
@@ -91,7 +100,7 @@ const DeveloperCreate = () => {
 						handleChange={handleChange}
 					/>
 
-					<Button color='primary' margin='normal' variant='contained' href='#'>Submit</Button>
+					<Button type='submit' onClick={onSubmit} color='primary' margin='normal' variant='contained' href='#'>Submit</Button>
 				</form>
 			</Grid>		
 			<Grid item xs={1}/>	
@@ -99,4 +108,18 @@ const DeveloperCreate = () => {
 	)
 }
 
-export default DeveloperCreate
+const mapStateToProps = (state) => ({
+	
+})
+
+const mapDispatchToProps = {
+	createDeveloper,
+	getDevelopers
+}
+
+DeveloperCreate.propTypes = {
+	createDeveloper: PropTypes.func.isRequired,
+	getDevelopers: PropTypes.func.isRequired,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeveloperCreate)

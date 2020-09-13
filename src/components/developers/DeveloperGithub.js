@@ -1,5 +1,4 @@
 import React from 'react'
-import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import TemplateGithub from './TemplateGithub';
