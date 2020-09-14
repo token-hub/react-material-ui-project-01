@@ -36,11 +36,33 @@ const useStyles = makeStyles( theme => ({
 				fontSize: '0.8rem'
 			},
 		}
-
+	},
+	btns: {
+		display: 'flex',
+		[theme.breakpoints.only('xs')] : {
+			flexDirection: 'column',
+			width: '100%'
+		}
+	},
+	btn: {
+		marginRight: '.5rem',
+		[theme.breakpoints.only('xs')] : {
+			margin: '.5rem 0',
+		}
 	}
 }))
 
-const DeveloperCamp = ({ developer, description, location, skils = [] }) => {
+const DeveloperCamp = ({id, developer, description, location, skils = [] }) => {
+
+	const createButtons = (color, value) => {
+		return {color, value};
+	}
+
+	const buttons = [
+		createButtons('primary', 'view profile'),
+		createButtons('primary', 'edit'),
+		createButtons('primary', 'delete'),
+	]
 
 	const classes = useStyles();
 	return (
@@ -69,12 +91,22 @@ const DeveloperCamp = ({ developer, description, location, skils = [] }) => {
 					<Typography variant='h4' color='secondary'> { developer } </Typography>
 					<Typography variant='body1'>{ description } </Typography>
 					<Typography variant='body1'> { location } </Typography>
-					<Button
-						href='/developer'
-						variant='contained' 
-						color='primary'
-						> View profile 
-					</Button>
+
+					<div className={classes.btns}>
+						{
+							buttons.map( ({color, value}, index) => (
+								<Button
+									key={index}
+									href={`/developer/${id}`}
+									variant='contained' 
+									color={color}
+									className={classes.btn}
+									> {value}
+								</Button>
+							) )
+						}
+					</div>
+
 				</Grid>
 				<Grid sm={3} 
 					item 
@@ -84,16 +116,16 @@ const DeveloperCamp = ({ developer, description, location, skils = [] }) => {
 					alignItems='center'
 					>
 					<Hidden only='xs'>
-					{
-						skils.length > 0 && skils.map(skill =>
-							(
-								<Typography variant='body1' color='primary' key={skill}>
-									<DoneIcon color='primary' />
-								 	{skill[0].toUpperCase()+skill.slice(1)} 
-								</Typography>
+						{
+							skils.length > 0 && skils.map(skill =>
+								(
+									<Typography variant='body1' color='primary' key={skill}>
+										<DoneIcon color='primary' />
+									 	{skill[0].toUpperCase()+skill.slice(1)} 
+									</Typography>
+								)
 							)
-						)
-					}
+						}
 					</Hidden>
 				</Grid>
 			</Grid>

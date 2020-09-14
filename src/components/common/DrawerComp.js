@@ -61,7 +61,7 @@ const DrawerComp = ({ location }) => {
 								onClick={routeHandler(route ? route : `${title.toLowerCase()}`)  }
 							>
 								<ListItemIcon> 
-								 	{ index %  2 ==  0 ? <Inbox /> : <Drafts /> }
+								 	{ index %  2 ===  0 ? <Inbox /> : <Drafts /> }
 								</ListItemIcon>
 								<ListItemText primary={title} />
 							</ListItem>
@@ -99,24 +99,3 @@ const DrawerComp = ({ location }) => {
 }
 
 export default withRouter(DrawerComp)
-
-
-/*
-					<div className={classes.headerClickable}>
-						{
-							['Landing' ,'Developers', 'Register', 'Login'].map((header, index) => 
-								(
-									<Typography key={index}>
-										<Link 
-											href="#" 
-											className={classes.link}
-											onClick={ router(`${header.toLowerCase()}`)  }
-											> {header}
-										</Link>
-									</Typography>
-								)
-							)
-						}
-					</div>
-
- */

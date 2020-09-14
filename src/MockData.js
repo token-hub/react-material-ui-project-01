@@ -1,26 +1,19 @@
 const developers = [
 	{
+		id: 1,
 		developer: 'John Doe',
-		description: 'Developer at Microsoft',
+		description: 'Developer',
+		company: 'Microsoft',
+		website: 'sample',
 		location: 'Seattle, WA',
-		skills: ['html', 'javscript', 'python', 'css']
-	}	
+		skills: ['html', 'javscript', 'python', 'css'],
+		github: 'sampleGithub',
+		bio: 'sampleBio'
+	}
 ]
-
-// const setTimeoutPromise = () => new Promise(resolve => setTimeout(resolve(developers), 2000))
-
-// export const MockData = () => {
-// 	return new Promise( resolve => {
-// 		setTimeout( () => resolve(developers) , 0)
-// 	} )
-// }
 
 export default () => {
 	return new Promise( resolve => {
 		setTimeout( () => resolve(developers), 0 )
 	} )
 }
-// const timer = (data, time) => 
-//     new Promise((resolve, reject) => 
-//         setTimeout(() => resolve(data), time)
-// );

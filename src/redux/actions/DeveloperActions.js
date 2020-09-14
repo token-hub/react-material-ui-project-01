@@ -6,14 +6,18 @@ export const getDevelopers = (payload = null) => ({
 	payload
 })
 
-export const createDeveloper = (payload) => ({
+export const createDeveloper = (payload = null) => ({
 	type: types.CREATE_DEVELOPER,
+	payload
+})
+
+export const updateDeveloper = (payload = null) => ({
+	type: types.UPDATE_DEVELOPER,
 	payload
 })
 
 export const processGetDevelopers = () => {
 	return dispatch => {
-
 		return MockData() 
 			.then( response => {
 				dispatch( getDevelopers(response) );
@@ -27,5 +31,11 @@ export const processGetDevelopers = () => {
 export const processCreateDeveloper = (data) => {
 	return dispatch => {
 		return  dispatch(createDeveloper(data)) 
+	}
+}
+
+export const processUpdateDeveloper = (data) => {
+	return dispatch => {
+		return dispatch(updateDeveloper(data)) 
 	}
 }

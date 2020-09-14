@@ -26,9 +26,9 @@ const useStyles = makeStyles(theme => ({
 
 const Developers = ({ developers, getDevelopers }) => {
 	const classes = useStyles();
-	
+		
 	const [devs, setDevs] = useState([...developers]);
-	
+
 	useEffect( () => {
 		if (developers.length < 1) {
 			getDevelopers();
@@ -51,21 +51,22 @@ const Developers = ({ developers, getDevelopers }) => {
 					/>
 
 					<Button
-						href='/developer/create' 
+						href='/developer' 
 						variant='contained' 
 						size='large'>
 						Add developer
 					</Button>
 
 					{
-						devs.length > 0 && devs.map( ({developer, description, location, skills}, index) => 
+						devs.length > 0 && devs.map( ({id, developer, description, location, skills}, index) => 
 							(
 								<DeveloperCard
+									id={id}
 									developer={developer}
 									description={description}
 									location={location}
 									skils={skills}
-									key={index}
+									key={id}
 								/>
 							) 
 						)

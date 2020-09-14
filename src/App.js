@@ -10,6 +10,7 @@ import DeveloperCreate from './components/developers/DeveloperCreate';
 import DeveloperExpAdd from './components/developers/DeveloperExpAdd';
 import DeveloperEduAdd from './components/developers/DeveloperEduAdd';
 import Developer from './components/developers/Developer';
+import ManageDevelopers from './components/developers/ManageDevelopers';
 import Home from './components/home/Home';
 import Posts from './components/post/Posts';
 import PostDiscussion from './components/post/PostDiscussions';
@@ -81,10 +82,12 @@ const App = ({ history, location }) => {
 					<Route path='/posts' component={Posts} />
 					<Route path='/register' component={Register} />
 					<Route path='/developers' component={Developers} />
-					<Route path='/developer/create' component={DeveloperCreate} />
 					<Route path='/developer/experience/add' component={DeveloperExpAdd} />
 					<Route path='/developer/education/add' component={DeveloperEduAdd} />
-					<Route path='/developer' component={Developer} />
+
+					<Route path='/developer/:slug' component={ManageDevelopers} /> 
+					<Route path='/developer' component={ManageDevelopers} />
+
 					<Route path='/home' component={Home} />
 					<Route component={PageNotPage} />
 				</Switch>

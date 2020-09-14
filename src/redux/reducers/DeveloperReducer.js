@@ -12,6 +12,9 @@ export default (state = [], { type, payload }) => {
 			{...payload}
 		]
 
+	case types.UPDATE_DEVELOPER:
+		return state.map( dev => dev.id == payload.id ? payload : dev )
+
 	default:
 		return state
 	}
