@@ -32,14 +32,17 @@ const useStyles = makeStyles(theme => ({
 const DeveloperCreate = ({ fields, values, handleChange, onSubmit }) => {
 	const {root, form} = useStyles();
 
+	const title = 'Create new developer';
+	const subtitle = 'Make your profile stand out';
+
 	return (
 		<Grid container>
 			<Grid item xs={1}/>
 			<Grid container item xs={10} className={root}>
 
 				<PageHeader
-					title='Create new developer'
-					subtitle='Make your profile stand out'
+					title={title}
+					subtitle={subtitle}
 					icon={<AccountCircle color='secondary' />}
 				/>
 
@@ -53,7 +56,6 @@ const DeveloperCreate = ({ fields, values, handleChange, onSubmit }) => {
 						values={values}
 						handleChange={handleChange}
 					/>
-
 					<Button type='submit' onClick={onSubmit} color='primary' margin='normal' variant='contained' href='#'>Submit</Button>
 				</form>
 

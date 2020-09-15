@@ -1,10 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import DeveloperCreate from './DeveloperCreate';
+import Developer from './Developer';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { useParams } from 'react-router';
 import { processCreateDeveloper as createDeveloper } from '../../redux';
 import { processGetDevelopers as getDevelopers } from '../../redux';
 import { processUpdateDeveloper as updateDeveloper } from '../../redux';
+import PageNotFound from '../common/PageNotFound';
+export const DevContext = React.createContext();
 
 const initial = [{
 	developer: '',
@@ -18,14 +22,17 @@ const initial = [{
 }]
 
 const ManageDevelopers = (props) => {
-		
+
+	const params = useParams();
+
 	const { 
 		createDeveloper,
 		history,
 		getDevelopers,
 		developers,
 		developer,
-		updateDeveloper 
+		updateDeveloper,
+		isView
 	} = props;
 
 	const [dev, setDev] = useState({...developer});
@@ -64,7 +71,6 @@ const ManageDevelopers = (props) => {
 		return {name, placeholder, fieldType}
 	}
 
-
 	const fields = [
 		textField('developer', 'text', 'Name'),
 		textField('description', 'select'),
@@ -79,34 +85,40 @@ const ManageDevelopers = (props) => {
 	return (
 		<React.Fragment>
 			{	
-				dev !== undefined &&
-					<DeveloperCreate
-						fields={fields}
-						values={dev}
-						handleChange={handleChange}
-						onSubmit={onSubmit}
-					/>
+				(dev !== undefined && !isView) 
+					?	<DeveloperCreate
+							fields={fields}
+							values={dev}
+							handleChange={handleChange}
+							onSubmit={onSubmit}
+						/>
+					: dev.developer !== undefined
+						?	<DevContext.Provider value={dev}>
+								<Developer />
+							</DevContext.Provider>
+						: <PageNotFound />
+						
 			}
 		</React.Fragment>
 	)
 } 
 
 const mapStateToProps = (state, ownProps) => {
-	const slug = ownProps.match.params.slug;
-	const filtered = state.developers.find( dev => dev.id === parseInt(slug));
+	const { slug, slugId } = ownProps = ownProps.match.params;
 
-	const developer = slug !== undefined && state.developers.length > 0
+	const filtered = state.developers.find(dev => dev.id === parseInt(slugId));
+	const isView = slug === 'view';
+	
+	const developer = !isView === false && slugId !== undefined && state.developers.length > 0 
 						? filtered !== undefined
 							? filtered
 							: initial
 						: initial
 
-						// console.log(slug !== undefined && state.developers.length > 0)
-						// console.log(filtered)
-
 	return {
 		developers: state.developers,
-		developer
+		developer,
+		isView
 	}
 }
 

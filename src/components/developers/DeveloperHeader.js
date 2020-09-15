@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import { Public, Twitter, Facebook, LinkedIn, Instagram } from '@material-ui/icons';
+import { DevContext } from './ManageDevelopers';
 
 const useStyles = makeStyles(theme => ({
 	card: {
@@ -32,6 +33,8 @@ const useStyles = makeStyles(theme => ({
 const DeveloperHeader = () => {
 	const {card, img, container, btn} = useStyles();
 	
+	const {developer, description, location} = useContext(DevContext);
+
 	const component = { Public, Twitter, Facebook, LinkedIn, Instagram }
 
 	function iconComponent(icon, style) {
@@ -62,15 +65,19 @@ const DeveloperHeader = () => {
 						src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200" 
 						className={img} 
 						/>
-						<Typography variant='h4'> John Doe </Typography>
-						<Typography variant='subtitle1'>Developer at Microsoft </Typography>
-						<Typography variant='subtitle1'> Seattle, WA </Typography>
+						<Typography variant='h4'> {developer} </Typography>
+						<Typography variant='subtitle1'>{description}</Typography>
+						<Typography variant='subtitle1'> {location} </Typography>
 
 						<div>
 							{
-								['Public', 'Facebook', 'Twitter', 'Instagram', 'LinkedIn'].map( icon => {
-									return iconComponent(icon, btn)
-								} )
+								['Public', 'Facebook', 'Twitter', 'Instagram', 'LinkedIn'].map( (icon, index) => (
+									<React.Fragment key={index}>
+										{
+											iconComponent(icon, btn)
+										}	
+									</React.Fragment>
+								))
 							}
 						</div>
 					</Grid>

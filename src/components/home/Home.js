@@ -41,7 +41,6 @@ const Home = () => {
 	}
 
 	const data = [
-		createData('Edit Profile', <AccountCircle color='primary'/>, '/developer/create'),
 		createData('Add Experience', <HistoryIcon color='primary'/>, '/developer/experience/add'),
 		createData('Edit Education', <ImportContactsIcon color='primary'/>, '/developer/education/add'),
 	]

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
 import DoneIcon from '@material-ui/icons/Done';
@@ -7,6 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Hidden from '@material-ui/core/Hidden';
 import clsx from 'clsx';
+import DiaglogComp from '../common/DialogComp';
+import { DialogContext } from '../developers/Developers';
 
 const useStyles = makeStyles( theme => ({
 	img: {
@@ -54,19 +56,22 @@ const useStyles = makeStyles( theme => ({
 
 const DeveloperCamp = ({id, developer, description, location, skils = [] }) => {
 
-	const createButtons = (color, value) => {
-		return {color, value};
+	const { dialogClickHandler } = useContext(DialogContext);
+
+	const createButtons = (color, value, href = undefined) => {
+		return {color, value, href};
 	}
 
 	const buttons = [
-		createButtons('primary', 'view profile'),
-		createButtons('primary', 'edit'),
+		createButtons('primary', 'view profile', `/developer/view/${id}`),
+		createButtons('primary', 'edit', `/developer/edit/${id}`),
 		createButtons('primary', 'delete'),
 	]
 
 	const classes = useStyles();
 	return (
 		<Card className={classes.card}>
+			<DiaglogComp id={id} />
 			<Grid container>
 				<Grid sm={3} 
 					item 
@@ -94,16 +99,28 @@ const DeveloperCamp = ({id, developer, description, location, skils = [] }) => {
 
 					<div className={classes.btns}>
 						{
-							buttons.map( ({color, value}, index) => (
-								<Button
-									key={index}
-									href={`/developer/${id}`}
-									variant='contained' 
-									color={color}
-									className={classes.btn}
-									> {value}
-								</Button>
-							) )
+							buttons.map( ({color, value, href}, index) => {
+								
+								const extraProps = {};
+
+								if (value==='delete') {
+									extraProps.onClick = dialogClickHandler
+								} else {
+									extraProps.href = href
+								}
+								console.log(href);
+									return (
+										<Button
+											key={index}
+											variant='contained' 
+											color={color}
+											className={classes.btn}
+											{...extraProps}
+											> {value}
+										</Button>
+									)
+								}	
+							)
 						}
 					</div>
 

@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card'
 import { makeStyles } from '@material-ui/core/styles'
 import Divider from '@material-ui/core/Divider';
 import DoneIcon from '@material-ui/icons/Done';
+import { DevContext } from './ManageDevelopers';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -31,6 +32,7 @@ const useStyles = makeStyles(theme => ({
 
 const DeveloperBioSkillSet = () => {
 	const classes = useStyles();
+	const {developer, bio, skills} = useContext(DevContext);
 
 	return (
 		<React.Fragment>
@@ -43,23 +45,20 @@ const DeveloperBioSkillSet = () => {
 					direction='column'
 					style={{ textAlign: 'center' }}
 					>
-					<Typography variant='h4' color='primary'>John's Bio</Typography>
+					<Typography variant='h4' color='primary'>{`${developer}'s Bio`}</Typography>
 					<Typography>
-						Lorem, ipsum dolor sit, amet consectetur adipisicing elit.
-						Quisquam nulla consectetur nihil placeat, cumque possimus 
-						debitis iste ea non quidem, modi dolorem delectus nesciunt
-						adipisci aliquid ipsa asperiores commodi voluptatibus.
+						{bio}
 					</Typography>
 					
 					<Divider className={classes.divider} />
 					<Typography variant='h4' color='primary'>Skill Set</Typography>
 					<Grid container className={classes.skills}>
 					{
-						['HTML', 'CSS', 'JAVASCRIPT', 'PYTHON'].map((skill, index) => 
+						skills !== undefined && skills.map((skill, index) => 
 							(
 								<div className={classes.skill} key={index}>
 									<DoneIcon color='primary' />
-									<Typography>{skill}</Typography>
+									<Typography>{skill[0].toUpperCase()+skill.slice(1)}</Typography>
 								</div>
 							)
 						)

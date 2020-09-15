@@ -15,6 +15,9 @@ export default (state = [], { type, payload }) => {
 	case types.UPDATE_DEVELOPER:
 		return state.map( dev => dev.id == payload.id ? payload : dev )
 
+	case types.DELETE_DEVELOPER:
+		return state.filter(dev => dev.id !== payload)
+
 	default:
 		return state
 	}

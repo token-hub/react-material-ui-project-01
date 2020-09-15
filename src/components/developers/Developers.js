@@ -8,6 +8,10 @@ import PageHeader from '../common/PageHeader';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { processGetDevelopers as getDevelopers } from '../../redux';
+import { processDeleteDeveloper as deleteDevelopers } from '../../redux';
+
+
+export const DialogContext = React.createContext();
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -24,10 +28,32 @@ const useStyles = makeStyles(theme => ({
 	},
 }))
 
-const Developers = ({ developers, getDevelopers }) => {
+const Developers = ({ developers, getDevelopers, deleteDevelopers, history }) => {
 	const classes = useStyles();
 		
 	const [devs, setDevs] = useState([...developers]);
+	const [isOpen, setOpen] = useState(false);
+
+	const dialogTitle = 'Delete account';
+	const dialogBody = 'Are you sure you want to delete this account?';
+
+	const dialogClickHandler = () => {
+		setOpen(!isOpen);
+	}
+
+	const dialogDeleteHandler = id => () => {
+		deleteDevelopers(id);
+		dialogClickHandler();
+		history.push('/developers');
+	}
+
+	const dialog = {
+		isOpen,
+		dialogClickHandler,
+		dialogDeleteHandler,
+		dialogTitle,
+		dialogBody
+	}
 
 	useEffect( () => {
 		if (developers.length < 1) {
@@ -36,7 +62,6 @@ const Developers = ({ developers, getDevelopers }) => {
 			setDevs([...developers])
 		}
 	}, [developers] )
-
 
 	return (
 		<div>
@@ -56,22 +81,25 @@ const Developers = ({ developers, getDevelopers }) => {
 						size='large'>
 						Add developer
 					</Button>
-
-					{
-						devs.length > 0 && devs.map( ({id, developer, description, location, skills}, index) => 
-							(
-								<DeveloperCard
-									id={id}
-									developer={developer}
-									description={description}
-									location={location}
-									skils={skills}
-									key={id}
-								/>
-							) 
-						)
-					}
-
+						{
+							devs.length > 0 && 
+								<DialogContext.Provider value={dialog} >
+								{
+									devs.map( ({id, developer, description, location, skills}, index) => 
+										(
+											<DeveloperCard
+												id={id}
+												developer={developer}
+												description={description}
+												location={location}
+												skils={skills}
+												key={id}
+											/>
+										) 
+									)
+								}
+								</DialogContext.Provider>
+						}
 				</Grid>
 				<Grid item sm={1} />
 			</Grid>
@@ -84,12 +112,14 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-	getDevelopers
+	getDevelopers,
+	deleteDevelopers
 }
 
 Developers.propTypes = {
 	developers: PropTypes.array.isRequired,
 	getDevelopers: PropTypes.func.isRequired,
+	deleteDevelopers: PropTypes.func.isRequired,
 }
 
 export default  connect(mapStateToProps, mapDispatchToProps)(Developers)

@@ -8,8 +8,11 @@ const developers = [
 		location: 'Seattle, WA',
 		skills: ['html', 'javscript', 'python', 'css'],
 		github: 'sampleGithub',
-		bio: 'sampleBio'
-	}
+		bio: `Lorem, ipsum dolor sit, amet consectetur adipisicing elit.
+				Quisquam nulla consectetur nihil placeat, cumque possimus 
+				debitis iste ea non quidem, modi dolorem delectus nesciunt
+				adipisci aliquid ipsa asperiores commodi voluptatibus.`
+	},
 ]
 
 export default () => {

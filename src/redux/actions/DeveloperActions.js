@@ -16,6 +16,11 @@ export const updateDeveloper = (payload = null) => ({
 	payload
 })
 
+export const deleteDeveloper = (payload = null) => ({
+	type: types.DELETE_DEVELOPER,
+	payload
+})
+
 export const processGetDevelopers = () => {
 	return dispatch => {
 		return MockData() 
@@ -29,13 +34,13 @@ export const processGetDevelopers = () => {
 }
 
 export const processCreateDeveloper = (data) => {
-	return dispatch => {
-		return  dispatch(createDeveloper(data)) 
-	}
+	return dispatch => dispatch(createDeveloper(data)); 
 }
 
 export const processUpdateDeveloper = (data) => {
-	return dispatch => {
-		return dispatch(updateDeveloper(data)) 
-	}
+	return dispatch => dispatch(updateDeveloper(data)); 
+}
+
+export const processDeleteDeveloper = (data) => {
+	return dispatch => dispatch(deleteDeveloper(data));
 }

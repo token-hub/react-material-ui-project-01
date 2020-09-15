@@ -85,10 +85,19 @@ const App = ({ history, location }) => {
 					<Route path='/developer/experience/add' component={DeveloperExpAdd} />
 					<Route path='/developer/education/add' component={DeveloperEduAdd} />
 
-					<Route path='/developer/:slug' component={ManageDevelopers} /> 
-					<Route path='/developer' component={ManageDevelopers} />
 
-					<Route path='/home' component={Home} />
+					<Route path='/developer/:slug/:slugId' exact component={ManageDevelopers} /> 
+					<Route path='/developer' component={ManageDevelopers} />
+					{/*
+						/developer/1
+							means i want to update a developer
+
+						/developer/view/1
+							means i want to view a developer
+
+						
+					*/}
+					<Route path='/home' component={Home} />	
 					<Route component={PageNotPage} />
 				</Switch>
 			</RouterContext.Provider>
